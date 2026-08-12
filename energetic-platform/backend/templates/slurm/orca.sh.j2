@@ -1,0 +1,33 @@
+#!/bin/bash
+#SBATCH --job-name={{ job_name }}
+#SBATCH --partition={{ partition }}
+{% if account %}#SBATCH --account={{ account }}
+{% endif -%}
+{% if qos %}#SBATCH --qos={{ qos }}
+{% endif -%}
+#SBATCH --nodes={{ nodes }}
+#SBATCH --ntasks={{ ntasks }}
+#SBATCH --cpus-per-task=1
+#SBATCH --mem={{ memory }}
+#SBATCH --time={{ walltime }}
+#SBATCH --output=slurm-%j.out
+#SBATCH --error=slurm-%j.err
+
+set -euo pipefail
+
+source {{ orca_env_script }}
+
+export OMP_NUM_THREADS=1
+
+ORCA_EXE="{{ orca_executable }}"
+WORKDIR="$SLURM_SUBMIT_DIR"
+SCRATCH_DIR="{{ scratch_root }}/orca_${SLURM_JOB_ID}"
+
+mkdir -p "$SCRATCH_DIR"
+cp "$WORKDIR/opt.inp" "$SCRATCH_DIR/"
+
+cd "$SCRATCH_DIR"
+"$ORCA_EXE" opt.inp > opt.out
+
+cp -a "$SCRATCH_DIR"/. "$WORKDIR"/
+rm -rf "$SCRATCH_DIR"

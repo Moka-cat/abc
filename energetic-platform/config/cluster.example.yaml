@@ -1,0 +1,36 @@
+cluster:
+  name: main_cluster
+  host: cluster.example.edu
+  port: 22
+  username: your_cluster_username
+  private_key: /run/secrets/cluster_key
+  remote_work_root: /data/your_username/energetic_platform/runs
+  remote_scratch_root: /scratch/your_username/energetic_platform
+
+slurm:
+  partition: TO_BE_CONFIRMED
+  account: null
+  qos: null
+
+  orca:
+    nodes: 1
+    ntasks: 24
+    memory: 90G
+    walltime: "72:00:00"
+
+  vasp:
+    nodes: 1
+    ntasks: 48
+    memory: 0
+    walltime: "72:00:00"
+
+orca:
+  version: "6.1.1"
+  executable: /TO_BE_CONFIRMED/orca
+  environment_script: /TO_BE_CONFIRMED/orca_env.sh
+
+vasp:
+  version: "6.3.0"
+  environment_script: /data/zhaoyingying_migration/software_private/vasp-6.3.0-bin/vasp_env_pt.sh
+  executable_name: vasp_std
+  potcar_root: /TO_BE_CONFIRMED/potpaw_PBE

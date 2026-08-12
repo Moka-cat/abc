@@ -1,0 +1,6 @@
+fastapi
+uvicorn[standard]
+pydantic-settings
+pyyaml
+jinja2
+paramiko

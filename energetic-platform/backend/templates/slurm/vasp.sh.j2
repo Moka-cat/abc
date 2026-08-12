@@ -1,0 +1,35 @@
+#!/bin/bash
+#SBATCH --job-name={{ job_name }}
+#SBATCH --partition={{ partition }}
+{% if account %}#SBATCH --account={{ account }}
+{% endif -%}
+{% if qos %}#SBATCH --qos={{ qos }}
+{% endif -%}
+#SBATCH --nodes={{ nodes }}
+#SBATCH --ntasks={{ ntasks }}
+#SBATCH --cpus-per-task=1
+#SBATCH --mem={{ memory }}
+#SBATCH --time={{ walltime }}
+#SBATCH --output=slurm-%j.out
+#SBATCH --error=slurm-%j.err
+
+set -euo pipefail
+
+source {{ vasp_env_script }}
+export OMP_NUM_THREADS=1
+
+VASP_EXE=$(command -v {{ vasp_executable_name }})
+if [ -z "$VASP_EXE" ]; then
+    echo "ERROR: {{ vasp_executable_name }} not found after loading environment"
+    exit 1
+fi
+
+echo "Job ID: $SLURM_JOB_ID"
+echo "Node list: $SLURM_JOB_NODELIST"
+echo "Tasks: $SLURM_NTASKS"
+echo "VASP executable: $VASP_EXE"
+echo "Start time: $(date)"
+
+srun "$VASP_EXE" > vasp.out
+
+echo "End time: $(date)"

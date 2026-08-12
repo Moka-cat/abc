@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body { height: 100%; }
+
+/* ── Base ── */
+* { -webkit-font-smoothing: antialiased; }
+
+/* ── Markdown inside chat ── */
+.md { color: #1e293b; }
+.md p { margin: 0.5em 0; line-height: 1.75; }
+.md p:first-child { margin-top: 0; }
+.md p:last-child  { margin-bottom: 0; }
+
+.md h1,.md h2,.md h3 { font-weight: 700; margin: 1.2em 0 0.5em; line-height: 1.3; color: #0d1b3e; }
+.md h1 { font-size: 1.08rem; }
+.md h2 { font-size: 0.98rem; }
+.md h3 { font-size: 0.91rem; color: #3b5080; }
+
+.md ul, .md ol { padding-left: 1.5em; margin: 0.5em 0; }
+.md li { margin: 0.3em 0; line-height: 1.7; }
+.md li::marker { color: #93c5fd; }
+
+.md code {
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 0.82em;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 5px;
+  padding: 0.12em 0.38em;
+  color: #1d4ed8;
+}
+.md pre {
+  background: #f8faff;
+  border: 1px solid #e2eaf7;
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  margin: 0.8em 0;
+}
+.md pre code { background: none; border: none; padding: 0; font-size: 0.83em; color: #1e293b; }
+
+.md table { border-collapse: collapse; width: 100%; margin: 0.8em 0; font-size: 0.85em; border-radius: 8px; overflow: hidden; }
+.md th, .md td { border: 1px solid #e2eaf7; padding: 0.5em 0.85em; }
+.md th { background: #f0f5ff; color: #3b5080; font-weight: 600; }
+.md tr:hover td { background: #f8fbff; }
+
+.md blockquote {
+  border-left: 3px solid #93c5fd;
+  margin: 0.7em 0;
+  padding: 0.35em 1em;
+  background: #f0f6ff;
+  border-radius: 0 8px 8px 0;
+  color: #4b5c7a;
+  font-style: italic;
+}
+.md strong { color: #0d1b3e; font-weight: 700; }
+.md a { color: #3b7ff5; text-decoration: none; border-bottom: 1px solid rgba(59,127,245,0.3); transition: border-color .15s; }
+.md a:hover { border-bottom-color: #3b7ff5; }
+.md hr { border: none; border-top: 1px solid #e2eaf7; margin: 1.1em 0; }
+
+/* Citation blocks */
+.md blockquote strong:first-child { color: #6366f1; font-style: normal; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #bfdbfe; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #93c5fd; }
+
+/* ── Cursor blink ── */
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+.cursor {
+  display: inline-block; width: 2px; height: 1em;
+  background: linear-gradient(135deg, #38bdf8, #6366f1);
+  border-radius: 1px; vertical-align: text-bottom; margin-left: 2px;
+  animation: blink 1s step-end infinite;
+}
+
+/* ── Thinking pulse ── */
+@keyframes thinking-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+.thinking-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  animation: thinking-pulse 1.4s ease-in-out infinite;
+}
+.thinking-dot:nth-child(2) { animation-delay: 0.2s; }
+.thinking-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* ── Sidebar scrollbar ── */
+.sidebar-scroll::-webkit-scrollbar { width: 3px; }
+.sidebar-scroll::-webkit-scrollbar-thumb { background: #c7d9f5; }
